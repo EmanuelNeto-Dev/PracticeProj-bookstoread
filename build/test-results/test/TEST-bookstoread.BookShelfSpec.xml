@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="A bookshelf =&gt;" tests="7" skipped="0" failures="0" errors="0" timestamp="2021-08-18T22:19:42" hostname="Air-de-Emanuel" time="0.062">
+  <properties/>
+  <testcase name="bookShelfContainsTwoBooksWhenTwoBooksAdded()" classname="bookstoread.BookShelfSpec" time="0.033"/>
+  <testcase name="shelfToStringShouldPrintBookCountAndTitles()" classname="bookstoread.BookShelfSpec" time="0.003"/>
+  <testcase name="is empty when no book was added to it" classname="bookstoread.BookShelfSpec" time="0.002"/>
+  <testcase name="booksReturnedFromShelfIsImmutableForClient()" classname="bookstoread.BookShelfSpec" time="0.003"/>
+  <testcase name="booksInBookShelfAreInInsertionOrderAfterCallingArrange()" classname="bookstoread.BookShelfSpec" time="0.004"/>
+  <testcase name="bookshelfArrangeByBookTitle()" classname="bookstoread.BookShelfSpec" time="0.001"/>
+  <testcase name="emptyBookShelfWhenAddIsCalledWithoutBooks()" classname="bookstoread.BookShelfSpec" time="0.0"/>
+  <system-out><![CDATA[Working on test A bookshelf =>
+Working on test A bookshelf =>
+Working on test A bookshelf =>
+Working on test case verifying if is empty when no book was added to it
+Working on test A bookshelf =>
+Working on test A bookshelf =>
+Working on test A bookshelf =>
+Working on test A bookshelf =>
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
