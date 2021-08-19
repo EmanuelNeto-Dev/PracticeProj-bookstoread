@@ -7,9 +7,10 @@ import org.junit.jupiter.api.TestInfo;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("A bookshelf =>")
@@ -23,7 +24,15 @@ public class BookShelfSpec {
         @BeforeEach
         void init() {
             shelf = new BookShelf();
-            effectiveJava = new Book("Effective Java","Joshua Bloch", LocalDate.of(2004, Month.MAY, 8));
+            effectiveJava =
+                    new Book("Effective Java","Joshua Bloch"
+                            , LocalDate.of(2004, Month.MAY, 8));
+            codeComplete =
+                    new Book("Code Complete", "Steve McConnell",
+                            LocalDate.of(2004, Month.JUNE, 9));
+            mythicalManMonth =
+                    new Book("The Mythical Man-Month", "Frederick Phillips Brooks"
+                            , LocalDate.of(1975, Month.JANUARY, 1));
         }
 
         private BookShelfSpec(TestInfo testInfo) {
@@ -35,24 +44,24 @@ public class BookShelfSpec {
         @DisplayName("is empty when no book was added to it")
         public void shelfEmptyWhenNoBookAdded(TestInfo testInfo) {
             System.out.println("Working on test case verifying if " + testInfo.getDisplayName());
-            List<String> books = shelf.books();
+            List<Book> books = shelf.books();
             assertTrue(books.isEmpty(), "BookShelf should be empty.") ;
         }
 
         @Test
         public void bookShelfContainsTwoBooksWhenTwoBooksAdded() {
-            shelf.addBook("Effective Java","Code Complete");
-            List<String> books = shelf.books();
+            shelf.addBook(effectiveJava, codeComplete);
+            List<Book> books = shelf.books();
             assertEquals(2, books.size(), "BookShelf should have two books.");
         }
 
         @Test
         public void shelfToStringShouldPrintBookCountAndTitles() {
-            shelf.addBook("The Phoenix Project","Java 8 in Action");
-            List<String> books = shelf.books();
-            assertAll(() -> assertTrue(books.contains("The Phoenix Project"),
+            shelf.addBook(effectiveJava, codeComplete);
+            List<Book> books = shelf.books();
+            assertAll(() -> assertTrue(books.contains(effectiveJava),
                             "1st title is missing"),
-                    () -> assertTrue(books.contains("Java 8 in Action"),
+                    () -> assertTrue(books.contains(codeComplete),
                             "2st title is missing"),
                     () -> assertEquals(2, books.size(), "Book count missing"));
 
@@ -61,17 +70,17 @@ public class BookShelfSpec {
         @Test
         public void emptyBookShelfWhenAddIsCalledWithoutBooks() {
             shelf.addBook();
-            List<String> books = shelf.books();
+            List<Book> books = shelf.books();
             assertTrue(books.isEmpty(), "BookShelf should be empty");
         }
 
         @Test
         public void booksReturnedFromShelfIsImmutableForClient() {
-            shelf.addBook("Effective Java", "Code Complete");
-            List<String> books = shelf.books();
+            shelf.addBook(effectiveJava, codeComplete);
+            List<Book> books = shelf.books();
 
             try {
-                books.add("The Mythical Man-Month");
+                books.add(mythicalManMonth);
                 fail("Should not be able to add book to books");
             }
             catch(Exception e) {
@@ -82,20 +91,31 @@ public class BookShelfSpec {
 
         @Test
         public void bookshelfArrangeByBookTitle() {
-            shelf.addBook("Effective Java", "Code Complete", "The Mythical Man-Month");
-            List<String> books = shelf.arrange();
-            assertEquals(Arrays.asList("Code Complete", "Effective Java", "The Mythical Man-Month")
+            shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
+            List<Book> books = shelf.arrange();
+            assertEquals(asList(codeComplete, effectiveJava, mythicalManMonth)
                     , books,
-                    () -> "Books in a bookshelf should be arranged lexicographically by book title");
+                    "Books in a bookshelf should be arranged lexicographically by book title");
         }
 
         @Test
         public void booksInBookShelfAreInInsertionOrderAfterCallingArrange() {
-            shelf.addBook("Effective Java", "Code Complete", "The Mythical Man-Month");
+            shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
             shelf.arrange();
-            List<String> books = shelf.books();
-            assertEquals(Arrays.asList("Effective Java", "Code Complete", "The Mythical Man-Month")
+            List<Book> books = shelf.books();
+            assertEquals(asList(effectiveJava, codeComplete, mythicalManMonth)
                     , books
-                    , () -> "Books in bookshelf are in insertion order");
+                    , "Books in bookshelf are in insertion order");
+        }
+
+        @Test
+        public void bookShelfArrangeByUserProvidedCriteria() {
+            shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
+            List<Book> books = shelf.arrange(Comparator.<Book>naturalOrder().reversed());
+            assertEquals(
+                    asList(mythicalManMonth, effectiveJava, codeComplete)
+                    ,books
+                    , "Books in a bookshelf are arranged in descending order of book title"
+            );
         }
 }

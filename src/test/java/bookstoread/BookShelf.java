@@ -1,25 +1,25 @@
 package bookstoread;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BookShelf {
 
-    List<String> books = new ArrayList<>();
+    private final List<Book> books = new ArrayList<>();
 
-    public List<String> books() {
-        return books != null
-                ? Collections.unmodifiableList(books) : Collections.emptyList();
+    public List<Book> books() {
+        return Collections.unmodifiableList(books);
     }
 
-    public void addBook(String... bookTitlesToAdd) {
+    public void addBook(Book... bookTitlesToAdd) {
         books.addAll(Arrays.asList(bookTitlesToAdd));
     }
 
-    public List<String> arrange() {
-        return books.stream().sorted().collect(Collectors.toList());
+    public List<Book> arrange() {
+        return arrange(Comparator.naturalOrder());
+    }
+
+    public List<Book> arrange(Comparator<Book> criteria) {
+        return books.stream().sorted(criteria).collect(Collectors.toList());
     }
 }
