@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="After adding some books..." tests="3" skipped="0" failures="0" errors="0" timestamp="2021-08-20T03:06:06" hostname="Air-de-Emanuel" time="0.013">
-  <properties/>
-  <testcase name="should contain two books when was added two books to it" classname="bookstoread.BookShelfSpec$BooksAreAdded" time="0.0"/>
-  <testcase name="should be possible to print the book count and the titles" classname="bookstoread.BookShelfSpec$BooksAreAdded" time="0.006"/>
-  <testcase name="should be immutable for any client" classname="bookstoread.BookShelfSpec$BooksAreAdded" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

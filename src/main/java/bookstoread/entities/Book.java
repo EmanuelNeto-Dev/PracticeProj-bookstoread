@@ -1,4 +1,4 @@
-package bookstoread;
+package bookstoread.entities;
 
 import java.time.LocalDate;
 
@@ -7,6 +7,8 @@ public class Book implements Comparable<Book>{
     private final String title;
     private final String author;
     private final LocalDate publishedOn;
+    private LocalDate startedReadingOn;
+    private LocalDate finishedToReadOn;
 
     public Book(String title, String author, LocalDate publishedOn) {
         this.title = title;
@@ -26,6 +28,18 @@ public class Book implements Comparable<Book>{
         return publishedOn;
     }
 
+    public void startedReadingOn(LocalDate startedOn) {
+        this.startedReadingOn = startedOn;
+    }
+
+    public void finishedToReadOn(LocalDate finishedOn) {
+        this.finishedToReadOn = finishedOn;
+    }
+
+    public boolean isRead() {
+        return startedReadingOn != null && finishedToReadOn != null;
+    }
+
     @Override
     public String toString() {
         return "Book {" +
@@ -38,4 +52,6 @@ public class Book implements Comparable<Book>{
     public int compareTo(Book that) {
         return this.title.compareTo(that.title);
     }
+
+
 }

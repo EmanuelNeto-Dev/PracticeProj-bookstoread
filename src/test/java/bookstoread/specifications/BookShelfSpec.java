@@ -1,35 +1,37 @@
-package bookstoread;
+package bookstoread.specifications;
 
+import bookstoread.entities.Book;
+import bookstoread.entities.BookShelf;
+import bookstoread.resolvers.BooksParameterResolver;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("the bookshelf =>")
+@ExtendWith(BooksParameterResolver.class)
 public class BookShelfSpec {
 
         private BookShelf shelf;
         private Book effectiveJava;
         private Book codeComplete;
         private Book mythicalManMonth;
+        private Book cleanCode;
+        private Book refactoring;
 
         @BeforeEach
-        void init() {
+        void init(Map<String, Book> books) {
             shelf = new BookShelf();
-            effectiveJava =
-                    new Book("Effective Java","Joshua Bloch"
-                            , LocalDate.of(2004, Month.MAY, 8));
-            codeComplete =
-                    new Book("Code Complete", "Steve McConnell",
-                            LocalDate.of(2004, Month.JUNE, 9));
-            mythicalManMonth =
-                    new Book("The Mythical Man-Month", "Frederick Phillips Brooks"
-                            , LocalDate.of(1975, Month.JANUARY, 1));
+            this.effectiveJava = books.get("Effective Java");
+            this.codeComplete = books.get("Code Complete");
+            this.mythicalManMonth = books.get("The Mythical Man-Month");
+            this.cleanCode = books.get("Clean Code");
+            this.refactoring = books.get("Refactoring");
         }
 
         @Nested
