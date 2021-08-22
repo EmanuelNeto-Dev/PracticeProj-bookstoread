@@ -24,15 +24,15 @@ public class BookShelf {
     }
 
     public Progress progress() {
-//        int booksRead = Long.valueOf(books.stream().filter(Book::isRead).count()).intValue();
-//        int booksToRead = books.size() - booksRead;
-//        int percentageCompleted = booksRead * 100 / books.size();
-//        int percentageToRead = booksToRead * 100 / books.size();
-//
-//        return new Progress(percentageCompleted, percentageToRead, 0);
         int booksRead = Long.valueOf(books.stream().filter(Book::isRead).count()).intValue();
         int booksToRead = books.size() - booksRead;
+        int percentageCompleted = booksRead * 100 / books.size();
+        int percentageToRead = booksToRead * 100 / books.size();
 
-        return new Progress(0, 100, 0);
+        return new Progress(percentageCompleted, percentageToRead, 0);
+//        int booksRead = Long.valueOf(books.stream().filter(Book::isRead).count()).intValue();
+//        int booksToRead = books.size() - booksRead;
+//
+//        return new Progress(0, 100, 0);
     }
 }

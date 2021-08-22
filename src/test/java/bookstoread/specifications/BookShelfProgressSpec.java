@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("The bookShelf progress")
+@DisplayName("the bookshelf progress =>")
 @ExtendWith(BooksParameterResolver.class)
 public class BookShelfProgressSpec {
 
@@ -39,6 +39,7 @@ public class BookShelfProgressSpec {
         @Test
         @DisplayName("should be 100% unread (0% Completed - 100% to read)")
         public void progress100PercentUnread() {
+            shelf.addBook(effectiveJava, cleanCode);
             Progress progress = shelf.progress();
             assertEquals(0,progress.percentualCompleted());
             assertEquals(100, progress.percentualToRead());
@@ -53,14 +54,16 @@ public class BookShelfProgressSpec {
         @Test
         @DisplayName("should be possible to get the Completed and To Read percentages")
         public void getProgressWithCompletedAndToReadPercentages() {
-            Progress progress = shelf.progress();
 
             effectiveJava.startedReadingOn(LocalDate.of(2016, Month.JULY, 1));
             cleanCode.startedReadingOn(LocalDate.of(2016, Month.JULY,31));
             cleanCode.finishedToReadOn(LocalDate.of(2016, Month.JULY, 31));
 
-            assertEquals(40, progress.percentualCompleted());
-            assertEquals(60, progress.percentualToRead());
+            shelf.addBook(effectiveJava, cleanCode);
+            Progress progress = shelf.progress();
+
+            assertEquals(50, progress.percentualCompleted());
+            assertEquals(50, progress.percentualToRead());
         }
     }
 }
