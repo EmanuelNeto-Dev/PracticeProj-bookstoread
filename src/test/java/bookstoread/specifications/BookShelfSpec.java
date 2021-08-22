@@ -56,10 +56,15 @@ public class BookShelfSpec {
         @Nested
         @DisplayName("After adding some books...")
         class BooksAreAdded {
+
+            @BeforeEach
+            void setup() {
+                shelf.addBook(effectiveJava, codeComplete);
+            }
+
             @Test
             @DisplayName("should contain two books when was added two books to it")
             public void bookShelfContainsTwoBooksWhenTwoBooksAdded() {
-                shelf.addBook(effectiveJava, codeComplete);
                 List<Book> books = shelf.books();
                 assertEquals(2, books.size(), "BookShelf should have two books.");
             }
@@ -67,7 +72,6 @@ public class BookShelfSpec {
             @Test
             @DisplayName("should be immutable for any client")
             public void booksReturnedFromShelfIsImmutableForClient() {
-                shelf.addBook(effectiveJava, codeComplete);
                 List<Book> books = shelf.books();
 
                 try {
@@ -83,7 +87,6 @@ public class BookShelfSpec {
             @Test
             @DisplayName("should be possible to print the book count and the titles")
             public void shelfToStringShouldPrintBookCountAndTitles() {
-                shelf.addBook(effectiveJava, codeComplete);
                 List<Book> books = shelf.books();
                 assertAll(() -> assertTrue(books.contains(effectiveJava),
                                 "1st title is missing"),
@@ -98,11 +101,15 @@ public class BookShelfSpec {
         @DisplayName("After be arranged...")
         class WasArranged {
 
+            @BeforeEach
+            void setup() {
+                shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
+            }
+
             @Test
             @Disabled("Needs to implement Comparator")
             @DisplayName("should be possible to arrange by book title")
             public void bookshelfArrangeByBookTitle() {
-                shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
                 List<Book> books = shelf.arrange();
                 assertEquals(asList(codeComplete, effectiveJava, mythicalManMonth)
                         , books,
@@ -112,7 +119,6 @@ public class BookShelfSpec {
             @Test
             @DisplayName("should be possible to stay in the same order that was inserted in the shelf")
             public void booksInBookShelfAreInInsertionOrderAfterCallingArrange() {
-                shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
                 shelf.arrange();
                 List<Book> books = shelf.books();
                 assertEquals(asList(effectiveJava, codeComplete, mythicalManMonth)
@@ -123,7 +129,6 @@ public class BookShelfSpec {
             @Test
             @DisplayName("should be possible to arrange in the reverse order that was inserted in the shelf")
             public void bookShelfArrangeByUserProvidedCriteria() {
-                shelf.addBook(effectiveJava, codeComplete, mythicalManMonth);
                 Comparator<Book> reversed = Comparator.<Book>naturalOrder().reversed();
                 List<Book> books = shelf.arrange(reversed);
                 //assertThat(books).isSortedAccordingTo(reversed);

@@ -1,5 +1,7 @@
 package bookstoread.entities;
 
+import bookstoread.interfaces.BookFilter;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,9 +32,17 @@ public class BookShelf {
         int percentageToRead = booksToRead * 100 / books.size();
 
         return new Progress(percentageCompleted, percentageToRead, 0);
-//        int booksRead = Long.valueOf(books.stream().filter(Book::isRead).count()).intValue();
-//        int booksToRead = books.size() - booksRead;
-//
-//        return new Progress(0, 100, 0);
     }
+
+    public List<Book> findBooksWithTheTitle(String title) {
+        return findBooksWithTheTitle(title, b -> true);
+    }
+
+    private List<Book> findBooksWithTheTitle(String title, BookFilter filter) {
+        return books.stream()
+                .filter(b -> b.getTitle().toLowerCase().contains(title))
+                .filter(b -> filter.apply(b))
+                .collect(Collectors.toList());
+    }
+
 }
