@@ -1,5 +1,6 @@
-package bookstoread.entities;
+package bookstoread.filters;
 
+import bookstoread.entities.Book;
 import bookstoread.interfaces.BookFilter;
 
 import java.time.LocalDate;
